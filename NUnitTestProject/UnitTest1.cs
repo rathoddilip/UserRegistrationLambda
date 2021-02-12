@@ -82,7 +82,45 @@ namespace NUnitTestProject
                 Assert.AreEqual("Password should not be empty", exception.Message);
             }
         }
-
+        /// <summary>
+        /// TC-5 Throw Custom Exception for Invalid Email
+        /// </summary>
+        [TestCase("abc@yahoo.com")]
+        [TestCase("abc-100@yahoo.com,")]
+        [TestCase("abc.100@yahoo.com")]
+        [TestCase("abc111@abc.com,")]
+        [TestCase("abc-100@abc.net,")]
+        [TestCase("abc.100@abc.com.au")]
+        [TestCase("abc@1.com,")]
+        [TestCase("abc@gmail.com.com")]
+        [TestCase("abc+100@gmail.com")]
+        [TestCase("abc")]
+        [TestCase("abc@.com.my")]
+        [TestCase("abc123@gmail.a")]
+        [TestCase("abc123@.com")]
+        [TestCase("abc@.com.com")]
+        [TestCase(".abc@abc.com")]
+        [TestCase("abc()*@gmail.com")]
+        [TestCase("abc@%*.com")]
+        [TestCase("abc..2002@gmail.com")]
+        [TestCase("abc.@gmail.com")]
+        [TestCase("abc@abc@gmail.com")]
+        [TestCase("abc@gmail.com.1a")]
+        [TestCase("abc@gmail.com.aa.au")]
+        [TestCase("")]//Invalid email input
+        public void Given_Email_Expecting_ThrowCustomException(string email)
+        {
+            string actual = " ";
+            try
+            {
+                actual = userRegistration.EmailLambda(email);
+            }
+            catch (UserRegistrationCustomException exception)
+            {
+                string expected= "Email should not be empty";
+                Assert.AreEqual(expected, exception.Message);
+            }
+        }
 
     }
 }

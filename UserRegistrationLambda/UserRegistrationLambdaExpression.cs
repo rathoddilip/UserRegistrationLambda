@@ -13,11 +13,13 @@ namespace UserRegistrationLambda
         string lastNamePattern = "^[A-Z]{1}[a-z]{2,}$";
         string mobileNumberPattern = "^[9]{1}[1]{1}[ ][0-9]{10}$";
         string passwordPattern = "^[A-Z]{1}[a-zA-Z]{7,}([0-9]+)[@#$%^&*+-_]{1}$";
+        string emailPattern = "^[0-9a-zA-Z]+([._+-]?[0-9a-zA-Z]+)*@[0-9A-Za-z]+.([c]{1}[o]{1}[m]{1})*([n]{1}[e]{1}[t]{1})*[,]*([.][a]{1}[u]{1})*([.][c]{1}[o]{1}[m]{1})*$";
         public bool FirstName(string patternFirstName) => Regex.IsMatch(patternFirstName, firstNamePattern);//lambda Expression
         public bool LastName(string patternLastName) => Regex.IsMatch(patternLastName, lastNamePattern);
         public bool MobileNumber(string patternMobileNumber) => Regex.IsMatch(patternMobileNumber, mobileNumberPattern);
-
         public bool Password(string patternPassword) => Regex.IsMatch(patternPassword, passwordPattern);
+        public bool Email(string patternEmail) => Regex.IsMatch(patternEmail, emailPattern);
+
 
 
         /// <summary>
@@ -127,6 +129,38 @@ namespace UserRegistrationLambda
                 throw exception;
             }
             return "Password is valid";
+        }
+
+        /// <summary>
+        /// Email Custom Exception handling
+        /// </summary>
+        /// <param name="patternEmail"></param>
+        /// <returns></returns>
+        public string EmailLambda(string patternEmail)
+        {
+            bool result = Password(patternEmail);
+            try
+            {
+                if (result == false)
+                {
+
+                    if (patternEmail.Equals(string.Empty))
+                    {
+                        throw new UserRegistrationCustomException(UserRegistrationCustomException.ExceptionType.USER_ENTERED_EMPTY, "Email should not be empty");
+                    }
+                    if (patternEmail.Any(char.IsLetterOrDigit) == null)
+                    {
+                        throw new UserRegistrationCustomException(UserRegistrationCustomException.ExceptionType.USER_ENTERED_SPECIAL_CHARACTER, "Email should contains special characters");
+                    }
+
+                }
+            }
+
+            catch (UserRegistrationCustomException exception)
+            {
+                throw exception;
+            }
+            return "Email is valid";
         }
 
 
