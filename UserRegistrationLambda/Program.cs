@@ -11,6 +11,8 @@ namespace UserRegistrationLambda
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to user registration lambda Expression");
+            Console.ReadLine();
+            
         }
     }
 }
