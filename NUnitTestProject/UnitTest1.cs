@@ -68,7 +68,7 @@ namespace NUnitTestProject
         /// <summary>
         /// TC-4 Throw Custom Exception for Invalid Password
         /// </summary>
-        [TestCase("Himnshunete1##")]
+        [TestCase("Admin1#")]
         [TestCase("")]
         public void Given_Password_Expecting_ThrowCustomException(string password)
         {
@@ -82,6 +82,7 @@ namespace NUnitTestProject
                 Assert.AreEqual("Password should not be empty", exception.Message);
             }
         }
+
 
     }
 }
