@@ -65,5 +65,23 @@ namespace NUnitTestProject
             }
         }
 
+        /// <summary>
+        /// TC-4 Throw Custom Exception for Invalid Password
+        /// </summary>
+        [TestCase("Himnshunete1##")]
+        [TestCase("")]
+        public void Given_Password_Expecting_ThrowCustomException(string password)
+        {
+            string actual = " ";
+            try
+            {
+                actual = userRegistration.PasswordLambda(password);
+            }
+            catch (UserRegistrationCustomException exception)
+            {
+                Assert.AreEqual("Password should not be empty", exception.Message);
+            }
+        }
+
     }
 }

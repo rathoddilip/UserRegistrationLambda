@@ -12,9 +12,13 @@ namespace UserRegistrationLambda
         string firstNamePattern = "^[A-Z]{1}[a-z]{2,}$";
         string lastNamePattern = "^[A-Z]{1}[a-z]{2,}$";
         string mobileNumberPattern = "^[9]{1}[1]{1}[ ][0-9]{10}$";
+        string passwordPattern = "^[A-Z]{1}[a-zA-Z]{7,}([0-9]+)[@#$%^&*+-_]{1}$";
         public bool FirstName(string patternFirstName) => Regex.IsMatch(patternFirstName, firstNamePattern);//lambda Expression
         public bool LastName(string patternLastName) => Regex.IsMatch(patternLastName, lastNamePattern);
         public bool MobileNumber(string patternMobileNumber) => Regex.IsMatch(patternMobileNumber, mobileNumberPattern);
+
+        public bool Password(string patternPassword) => Regex.IsMatch(patternPassword, passwordPattern);
+
 
         /// <summary>
         /// First Name Custom Exception
@@ -100,7 +104,29 @@ namespace UserRegistrationLambda
             {
                 throw exception;
             }
-            return "MobileNumber is not valid";
+            return "MobileNumber is  valid";
+        }
+
+        public string PasswordLambda(string patternPassword)
+        {
+            bool result = Password(patternPassword);
+            try
+            {
+                if (result == false)
+                {
+
+                    if (patternPassword.Equals(string.Empty))
+                    {
+                        throw new UserRegistrationCustomException(UserRegistrationCustomException.ExceptionType.USER_ENTERED_EMPTY, "Password should not be empty");
+                    }
+                }
+            }
+
+            catch (UserRegistrationCustomException exception)
+            {
+                throw exception;
+            }
+            return "Password is valid";
         }
 
 
