@@ -10,8 +10,9 @@ namespace UserRegistrationLambda
     public class UserRegistrationLambdaExpression
     {
         string firstNamePattern = "^[A-Z]{1}[a-z]{2,}$";
+        string lastNamePattern = "^[A-Z]{1}[a-z]{2,}$";
         public bool FirstName(string patternFirstName) => Regex.IsMatch(patternFirstName, firstNamePattern);//lambda Expression
-
+        public bool LastName(string patternLastName) => Regex.IsMatch(patternLastName, lastNamePattern);
 
         /// <summary>
         /// First Name Custom Exception
@@ -35,18 +36,6 @@ namespace UserRegistrationLambda
                     {
                         throw new UserRegistrationCustomException(UserRegistrationCustomException.ExceptionType.USER_ENTERED_LESSTHAN_MINIMUM_LENGTH, "FirstName should contains atleast three characters");
                     }
-                    if (patternFirstName.Any(char.IsDigit))
-                    {
-                        throw new UserRegistrationCustomException(UserRegistrationCustomException.ExceptionType.USER_ENTERED_NUMBER, "FirstName should not contains number");
-                    }
-                    if (!char.IsUpper(patternFirstName[0]))
-                    {
-                        throw new UserRegistrationCustomException(UserRegistrationCustomException.ExceptionType.USER_ENTERED_LOWERCASE, "FirstName first letter should not be a lowercase");
-                    }
-                    if (patternFirstName.Any(char.IsLetterOrDigit))
-                    {
-                        throw new UserRegistrationCustomException(UserRegistrationCustomException.ExceptionType.USER_ENTERED_SPECIAL_CHARACTER, "FirstName should not contains special characters");
-                    }
 
                 }
             }
@@ -57,6 +46,39 @@ namespace UserRegistrationLambda
             }
             return "FirstName is valid";
         }
+        /// <summary>
+        /// LastName Custom Exception
+        /// </summary>
+        /// <param name="patternLastName"></param>
+        /// <returns></returns>
+        public string LastNameLambda(string patternLastName)
+        {
+            bool result = LastName(patternLastName);
+            try
+            {
+                if (result == false)
+                {
+
+                    if (patternLastName.Equals(string.Empty))
+                    {
+                        throw new UserRegistrationCustomException(UserRegistrationCustomException.ExceptionType.USER_ENTERED_EMPTY, "LastName should not be empty");
+                    }
+                    if (patternLastName.Length < 3)
+                    {
+                        throw new UserRegistrationCustomException(UserRegistrationCustomException.ExceptionType.USER_ENTERED_LESSTHAN_MINIMUM_LENGTH, "LastName should contains atleast three characters");
+
+                    }
+
+                }
+            }
+
+            catch (UserRegistrationCustomException exception)
+            {
+                throw exception;
+            }
+            return "LastName is valid";
+        }
+
 
     }
 }

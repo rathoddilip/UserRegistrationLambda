@@ -15,8 +15,8 @@ namespace NUnitTestProject
         /// TC-1 Throw Custom Exception for Invalid FirstName
         /// </summary>
         [TestCase("Dilip")]//Valid Input
-        [TestCase("Ra")]//Invalid Input- Exception Occured
-        public void Given_FirstName_Expecting_ThrowCustomException(string firstName)
+        [TestCase("Ra")]//Invalid Input- Exception Occured 
+        public void GivenFirstNameExpectingThrowCustomException(string firstName)
         {
             string actual = " ";
             try
@@ -29,6 +29,21 @@ namespace NUnitTestProject
                 Assert.AreEqual(expected, exception.Message);
             }
             
+        }
+        [TestCase("Rathod")]//valid Input
+        [TestCase("Ra")]//Invalid Input - Exception Occured and handled by custome exception
+        public void Given_LastName_Expecting_ThrowCustomException(string lastName)
+        {
+            string actual = " ";
+            try
+            {
+                actual = userRegistration.LastNameLambda(lastName);
+            }
+            catch (UserRegistrationCustomException exception)
+            {
+                string exptected = "LastName should contains atleast three characters";
+                Assert.AreEqual(exptected, exception.Message);
+            }
         }
 
     }
