@@ -46,5 +46,24 @@ namespace NUnitTestProject
             }
         }
 
+        /// <summary>
+        /// TC-3 Throw Custom Exception for Invalid MobileNumber
+        /// </summary>
+        [TestCase("91 9988776655")]//Valid
+        [TestCase("")]//Invalid Input
+        public void Given_MobileNumber_Expecting_ThrowCustomException(string mobileNumber)
+        {
+            string actual = " ";
+            try
+            {
+                actual = userRegistration.MobileNumberLambda(mobileNumber);
+            }
+            catch (UserRegistrationCustomException exception)
+            {
+                string expected = "MobileNumber should not be empty";
+                Assert.AreEqual(expected, exception.Message);
+            }
+        }
+
     }
 }
